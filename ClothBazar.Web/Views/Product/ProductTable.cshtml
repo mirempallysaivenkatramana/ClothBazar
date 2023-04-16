@@ -3,15 +3,33 @@
     ViewBag.Title = "ProductTable";
 }
 <div>
-    <form method="post" action="/Product/ProductTable">
-        <input id="searchTxt" name="Search" />
-        <button type="button" id="SearchBtn">Search</button>
-    </form>
-    <button type="button" id="newBtn">New</button>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>search</label>
+                    <input class="form-control" id="searchTxt" name="Search" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>actions</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="SearchBtn">Search</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="newBtn">New</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </form>
 </div>
 <h2>ProductTable</h2>
 <div>
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <td>product Name</td>
@@ -27,11 +45,21 @@
             <tr>
 
                 <td>@product.Name</td>
-                <td>-</td>
+                <td>
+                                @if (product.Category != null)
+                                {
+                                    <text>@product.Category.Name</text>
+                                }
+                                else
+                                {
+                                    <text>-</text>
+                                }
+
+               </td>
                 <td>@product.Price</td>
                 <td>
-                    <button class="editBtn" data-id="@product.Id">Edit</button>
-                    <button class="deleteBtn" data-id="@product.Id">delete</button>
+                    <button style="color:white;background-color:yellowgreen;" class="editBtn" data-id="@product.Id">Edit</button>
+                    <button style="color:white;background-color:yellowgreen;" class="deleteBtn" data-id="@product.Id">delete</button>
                 </td>
             </tr>
         }

@@ -5,12 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ClothBazar.Services;
+using ClothBazar.Web.ViewModels;
 
 namespace ClothBazar.Web.Controllers
 {
     public class ProductController : Controller
     {
         ProductsService productsService = new ProductsService();
+       // CategoriesServices categoryservice = new CategoriesServices();
         // GET: Product
         public ActionResult Index()
         {
@@ -36,12 +38,20 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            CategoriesServices cateroryservices = new CategoriesServices();
+            var categories = cateroryservices.GetCategories();
+            return PartialView(categories);
         }
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(NewCategoryViewModel model)
         {
-            productsService.SaveProduct(product);
+            CategoriesServices categoryservice = new CategoriesServices();
+            var newproduct = new Product();
+            newproduct.Name = model.Name;
+            newproduct.Description = model.Description;
+            newproduct.Price = model.Price;
+            newproduct.Category = categoryservice.GetCategorie(model.CategoryId);
+            productsService.SaveProduct(newproduct);
             return RedirectToAction("ProductTable");
         }
         [HttpGet]

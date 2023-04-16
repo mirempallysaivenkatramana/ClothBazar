@@ -10,5 +10,6 @@ namespace ClothBazar.Entities
     {
         public Category Category { get; set; }
         public decimal Price { get; set; }
+
     }
 }
