@@ -5,6 +5,12 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Web", "ClothBazar.Web\ClothBazar.Web.csproj", "{9B97E307-B379-4CBB-BD1C-E5D1FE141B65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Entities", "ClothBazar.Entities\ClothBazar.Entities.csproj", "{0F099ADE-045B-4ED5-8BF3-9AB73FF478A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Database", "ClothBazar.Database\ClothBazar.Database.csproj", "{577EBC4A-3970-4527-A364-62663CFFC276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Services", "ClothBazar.Services\ClothBazar.Services.csproj", "{0054E33F-E471-43EA-B642-EBDE6D116F05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{9B97E307-B379-4CBB-BD1C-E5D1FE141B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B97E307-B379-4CBB-BD1C-E5D1FE141B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B97E307-B379-4CBB-BD1C-E5D1FE141B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F099ADE-045B-4ED5-8BF3-9AB73FF478A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F099ADE-045B-4ED5-8BF3-9AB73FF478A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F099ADE-045B-4ED5-8BF3-9AB73FF478A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F099ADE-045B-4ED5-8BF3-9AB73FF478A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{577EBC4A-3970-4527-A364-62663CFFC276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{577EBC4A-3970-4527-A364-62663CFFC276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{577EBC4A-3970-4527-A364-62663CFFC276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{577EBC4A-3970-4527-A364-62663CFFC276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0054E33F-E471-43EA-B642-EBDE6D116F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0054E33F-E471-43EA-B642-EBDE6D116F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0054E33F-E471-43EA-B642-EBDE6D116F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0054E33F-E471-43EA-B642-EBDE6D116F05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

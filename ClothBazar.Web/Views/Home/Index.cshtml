@@ -1,33 +1,73 @@
-﻿@{
+﻿@model ClothBazar.Web.ViewModels.HomeViewModel
+@{
     ViewBag.Title = "Home Page";
+    var firstcatergory = Model.categories.Where(category => category.ImageURL != null).First();
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<div class="banner">
+    <div class="container">
+        <div class="banner-bottom">
+            <div class="banner-bottom-left">
+                <h2>B<br>U<br>Y</h2>
+            </div>
+            <div class="banner-bottom-right">
+                <div class="callbacks_container">
+                    <ul class="rslides" id="slider4">
+                        <li>
+                            <div class="banner-info">
+                                <h3>Smart But Casual</h3>
+                                <p>Start your shopping here...</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="banner-info">
+                                <h3>Shop Online</h3>
+                                <p>Start your shopping here...</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="banner-info">
+                                <h3>Pack your Bag</h3>
+                                <p>Start your shopping here...</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+                <!--banner-->
+                <script src="~/Content/js/responsiveslides.min.js"></script>
+                <script>
+                    // You can also use "$(window).load(function() {"
+                    $(function () {
+                        // Slideshow 4
+                        $("#slider4").responsiveSlides({
+                            auto: true,
+                            pager: true,
+                            nav: false,
+                            speed: 500,
+                            namespace: "callbacks",
+                            before: function () {
+                                $('.events').append("<li>before event fired.</li>");
+                            },
+                            after: function () {
+                                $('.events').append("<li>after event fired.</li>");
+                            }
+                        });
+
+                    });
+                </script>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
     </div>
-</main>
+</div>
+<section>
+<div align="center">
+    <div class="thumb">
+        <img src="@firstcatergory.ImageURL" alt="Image" />
+        <div class="ele-btn">
+            <a href="">@firstcatergory.Name</a>
+        </div>
+    </div>
+</div>
+</section>
