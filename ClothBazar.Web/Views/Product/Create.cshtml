@@ -31,26 +31,7 @@
 </form>
 
 
-<form id="createproduct">
-   <label>Category</label>
-    <select name="CategoryID" >
-        @foreach(var category in Model)
-            {
-                <option value="@category.Id">@category.Name</option>
-            }
-    </select>
-    <br />
-    <label>Product Name</label>
-    <input name="name" />
-    <br />
-    <label>Description</label>
-    <input name="Description" />
-    <br />
-    <label>Price</label>
-    <input name="Price" />
-    <br />
-    <button id="saveBtn" type="button">save</button>
-</form>
+
 <script>
     $("#saveBtn").click(function () {
         var searchvalue = $("#searchTxt").val();

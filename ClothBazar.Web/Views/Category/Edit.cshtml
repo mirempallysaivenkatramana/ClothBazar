@@ -1,6 +1,9 @@
 ﻿@model ClothBazar.Entities.Category
 @{
     ViewBag.Title = "Edit category";
+
+    var truechecked = Model.IsFeatured ? "checked" : string.Empty;
+    var falsechecked = !Model.IsFeatured ? "checked" : string.Empty;
 }
 
 <h2>Edit category</h2>
@@ -13,6 +16,9 @@
     <label>description</label>
     <input name="description" value="@Model.Description" />
     <br />
+    <label>IsFeatured</label>
+    <input name="IsFeatured" type="radio" value="true"  @truechecked/>true
+    <input name="IsFeatured" type="radio" value="false" @falsechecked/>false
     <button type="submit">save</button>
 </form>
 

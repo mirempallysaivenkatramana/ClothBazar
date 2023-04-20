@@ -6,10 +6,20 @@
 
 <h2>Index</h2>
 
-@foreach(var Category in Model )
-            {
-                <h1>@Category.Name</h1>
-            }
+<div class="container">
+    <h2 align="centre">Index</h2>
+    <div align="center" id="tablecontainer">
+        @{
+            Html.RenderAction("categoryTable");
+
+            // Html.RenderAction("create");
+        }
+    </div>
+    <div align="center" id="actioncontainer">
+
+    </div>
+</div>
+
 
 
 

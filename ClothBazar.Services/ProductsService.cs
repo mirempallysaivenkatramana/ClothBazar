@@ -17,6 +17,10 @@ namespace ClothBazar.Services
         {
             return context.Products.Include(x=>x.Category).ToList();
         }
+        public List<Product> GetProducts(List<int> Ids)
+        {
+            return context.Products.Where(product => Ids.Contains(product.Id)).ToList();
+        }
         public Product GetProduct(int Id)
         {
             return context.Products.Find(Id);

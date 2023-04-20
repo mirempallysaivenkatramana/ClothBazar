@@ -22,11 +22,20 @@ namespace ClothBazar.Web.Controllers
                 List<Category> categories = categoryservice.GetCategories();
                 return View(categories);
         }
-
+        public ActionResult CategoryTable(string Search)
+        {
+            //var categories = categoryservice.GetCategories();
+            List<Category> categories = categoryservice.GetCategories();
+            if (string.IsNullOrEmpty(Search) == false)
+            {
+                categories = categories.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
+            }
+            return PartialView(categories);
+        }
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
         [HttpPost]
         public ActionResult Create(Category category)
@@ -39,7 +48,7 @@ namespace ClothBazar.Web.Controllers
         public ActionResult Edit(int Id)
         {
             var category = categoryservice.GetCategorie(Id);
-            return View(category);
+            return PartialView(category);
         }
         [HttpPost]
         public ActionResult Edit(Category category)

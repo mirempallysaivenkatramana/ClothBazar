@@ -1,7 +1,10 @@
-﻿@model List<ClothBazar.Entities.Product>
+﻿@model List<ClothBazar.Entities.Category>
 @{
-    ViewBag.Title = "ProductTable";
+    ViewBag.Title = "CategoryTable";
 }
+
+<h2>CategoryTable</h2>
+
 <div>
     <form method="post">
         <div class="row">
@@ -26,41 +29,32 @@
             </div>
         </div>
     </form>
-</div>
+ </div>
+
+<div/>
 <h2>ProductTable</h2>
 <div>
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>product Name</td>
                 <td>category</td>
-                <td>Price</td>
+                <td>products</td>
                 <td>Actions</td>
             </tr>
         </thead>
         <tbody>
 
-            @foreach (var product in Model)
+            @foreach (var category in Model)
             {
                 <tr>
-
-                    <td>@product.Name</td>
                     <td>
-                        @if (product.Category != null)
-                        {
-                            <text>@product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-
+                        <h1>@category.Name</h1>
+                        
                     </td>
-                    <td>@product.Price</td>
+                    <td>-</td>
                     <td>
-                        <button class="editBtn" data-id="@product.Id">Edit</button>
-                        <button class="deleteBtn" data-id="@product.Id">delete</button>
-                        <button class="addtoCart" data-id="@product.Id">ADD TO CART</button>
+                        <button style="color:white;background-color:yellowgreen;" class="editBtn" data-id="@category.Id">Edit</button>
+                        <button style="color:white;background-color:yellowgreen;" class="deleteBtn" data-id="@category.Id">delete</button>
                     </td>
                 </tr>
             }
@@ -73,7 +67,7 @@
         var searchvalue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Product/ProductTable',
+            url: '/Category/CategoryTable',
             data: {
                 search: searchvalue
             }
@@ -87,7 +81,7 @@
     });
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Product/Create',
+            url: '/Category/Create',
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
@@ -99,7 +93,7 @@
     });
     $(".editBtn").click(function () {
         $.ajax({
-            url: '/Product/edit',
+            url: '/category/edit',
             data: {
                 Id: $(this).attr('data-id')
             }
@@ -112,65 +106,28 @@
             });
     });
     $(".deleteBtn").click(function () {
-        swal({
-            title: "Confirm?",
-            text: "Are you sure you want delete product?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
+        var confirmDelete = confirm("Are you sure you want delete product?");
+        if (confirmDelete) {
+            $.ajax({
                 type: 'post',
-                url: '/Product/delete',
+                url: '/category/delete',
                 data: {
                     Id: $(this).attr('data-id')
                 }
             })
                 .done(function (response) {
                     $("#tablecontainer").html(response);
-                    swal("Recorded deleted successfully.", {
-                        icon: "success",
-                    });
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("fail");
-
                 });
-                    
-                //} else {
-                //    swal("Your imaginary file is safe!");
-                }
-            });
-
-        //var confirmDelete = confirm("Are you sure you want delete product?");
-        //if (confirmDelete) {
-        //    $.ajax({
-        //        type: 'post',
-        //        url: '/Product/delete',
-        //        data: {
-        //            Id: $(this).attr('data-id')
-        //        }
-        //    })
-        //        .done(function (response) {
-        //            $("#tablecontainer").html(response);
-        //        })
-        //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        //            alert("fail");
-        //        });
-        //}
+        }
     });
-    var products = [];
-    $(".addtoCart").click(function () {
-        var productID = $(this).attr('data-id');
-        products.push(productID);
 
-        $.cookie('CartProducts',
-            products.join('-'),
-            { path: '/' }
-        );
+    function focusAction() {
+        $('html, body').animate({
+            scrollTop: $("actioncontainer").offset().Top - 100
+        }, 1000);
+    }
 
-        alert("product added to cart.");
-    });
 </script>

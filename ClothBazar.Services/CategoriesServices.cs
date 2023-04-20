@@ -20,6 +20,10 @@ namespace ClothBazar.Services
         {
             return context.Categories.Find(Id);
         }
+        public List<Category> GetFeaturedCategories()
+        {
+            return context.Categories.Where(x=>x.IsFeatured && x.ImageURL != null).ToList();
+        }
         public void SaveCategory(Category category)
         {
             context.Categories.Add(category);
