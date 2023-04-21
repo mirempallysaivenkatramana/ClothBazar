@@ -1,4 +1,5 @@
-﻿@model List<ClothBazar.Entities.Category>
+﻿
+@model List<ClothBazar.Entities.Category>
 @{
     ViewBag.Title = "CategoryTable";
 }
@@ -67,7 +68,7 @@
         var searchvalue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Category/CategoryTable',
+            url: '@Url.Action("CategoryTable","Category")',//'/Category/CategoryTable',
             data: {
                 search: searchvalue
             }
@@ -81,7 +82,7 @@
     });
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Category/Create',
+            url: '@Url.Action("create","Category")',//'/Category/Create',
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);

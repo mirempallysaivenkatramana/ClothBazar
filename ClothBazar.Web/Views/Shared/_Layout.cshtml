@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    ClothBazar.Services.ConfigurationsService configurationsservices = new ClothBazar.Services.ConfigurationsService();
+    var FacebookURL = configurationsservices.GetConfig("FacebookURL");
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>Ecommerce a Flat E-Commerce Bootstrap Responsive Website Template | Home :: w3layouts</title>
@@ -20,7 +25,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- cart -->
     <script src="~/Content/js/simpleCart.min.js"></script>
     <!-- cart -->
-    <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
@@ -78,8 +83,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
                             </li>
-                           
-                            //<li><a href="~/Content/typography.html">TYPO</a></li>
+
+                            //
+                            <li><a href="~/Content/typography.html">TYPO</a></li>
                             <li><a href="~/Content/contact.html">CONTACT</a></li>
                         </ul>
                     </div>
@@ -99,6 +105,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <input type="text" value="Enter Your Email Here" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Your Email Here';}" />
                         <input type="submit" value="SUBSCRIBE" />
                     </form>
+                    @*<ul class="flat-social">
+                        
+                        <li><a href="@configurationsservices.GetConfig("FacebookURL").Value;.value"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>*@
                 </div>
                 <div class="clearfix"> </div>
             </div>
