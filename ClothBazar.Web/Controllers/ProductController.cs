@@ -11,20 +11,26 @@ namespace ClothBazar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        ProductsService productsService = new ProductsService();
-       // CategoriesServices categoryservice = new CategoriesServices();
+       //ProductSearchViewModel model = new ProductSearchViewModel();
+        // ProductsService productsService = new ProductsService();
+        CategoriesServices categoryservice = new CategoriesServices();
         // GET: Product
         public ActionResult Index()
         {
             return View();
         }
         
-        public ActionResult ProductTable(string Search)
+        public ActionResult ProductTable(string Search,int? pageNo)
         {
-            var product = productsService.GetProducts();
+            ProductSearchViewModel model = new ProductSearchViewModel();
+
+            //pageNo =pageNo.HasValue? pageNo:1;
+
+            model.Products = ProductsService.Instance.GetProducts(/*pageNo.Value*/);
             if (string.IsNullOrEmpty(Search) == false)
             {
-                product = product.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
+                model.SearchTerm = Search;
+                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
             }
             /*foreach(var p in product)
             {
@@ -33,17 +39,19 @@ namespace ClothBazar.Web.Controllers
 
                 }
             }*/
-            return PartialView(product);
+            return PartialView(model);
         }
         [HttpGet]
         public ActionResult Create()
         {
             CategoriesServices cateroryservices = new CategoriesServices();
-            var categories = cateroryservices.GetCategories();
-            return PartialView(categories);
+            NewProductViewModel model = new NewProductViewModel();
+
+            model.AvaliableCategories = cateroryservices.GetCategories();
+            return PartialView(model);
         }
         [HttpPost]
-        public ActionResult Create(NewCategoryViewModel model)
+        public ActionResult Create(NewProductViewModel model)
         {
             CategoriesServices categoryservice = new CategoriesServices();
             var newproduct = new Product();
@@ -51,25 +59,39 @@ namespace ClothBazar.Web.Controllers
             newproduct.Description = model.Description;
             newproduct.Price = model.Price;
             newproduct.Category = categoryservice.GetCategorie(model.CategoryId);
-            productsService.SaveProduct(newproduct);
+            ProductsService.Instance.SaveProduct(newproduct);
             return RedirectToAction("ProductTable");
         }
         [HttpGet]
         public ActionResult Edit(int Id)
         {
-            var product = productsService.GetProduct(Id);
-            return PartialView(product);
+            EditProductViewModels model = new EditProductViewModels();
+            var product =ProductsService.Instance.GetProduct(Id);
+
+            model.Id = product.Id;
+            model.Name = product.Name;
+            model.Description = product.Description;
+            model.Price = product.Price;
+            model.CategoryId = product.Category!=null?product.Category.Id:0;
+            model.AvaliableCategories = categoryservice.GetCategories();
+            return PartialView(model);
         }
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(EditProductViewModels model)
         {
-            productsService.UpdateProduct(product);
+            var exitingproduct = new Product();
+            exitingproduct.Name = model.Name;
+            exitingproduct.Description = model.Description;
+            exitingproduct.Price = model.Price;
+            exitingproduct.Category = categoryservice.GetCategorie(model.CategoryId);
+            
+            ProductsService.Instance.UpdateProduct(exitingproduct);
             return RedirectToAction("ProductTable");
         }
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            productsService.DeleteProduct(Id);
+            ProductsService.Instance.DeleteProduct(Id);
             return RedirectToAction("ProductTable");
         }
     }

@@ -11,7 +11,7 @@ namespace ClothBazar.Web.Controllers
     public class ShopController : Controller
     {
         // GET: Shop
-        ProductsService productsservices = new ProductsService();
+       // ProductsService productsservices = new ProductsService();
         public ActionResult Checkout()
         {
             CheckoutViewModels model = new CheckoutViewModels();
@@ -26,7 +26,7 @@ namespace ClothBazar.Web.Controllers
 
                 model.CartProductIds = CartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
 
-                model.CartProducts = productsservices.GetProducts(model.CartProductIds);
+                model.CartProducts = ProductsService.Instance.GetProducts(model.CartProductIds);
             }
             return View(model);
         }

@@ -1,4 +1,4 @@
-﻿@model List<ClothBazar.Entities.Category>
+﻿@model ClothBazar.Web.ViewModels.NewProductViewModel
 @{
     ViewBag.Title = "Create";
 }
@@ -8,9 +8,10 @@
     <div class="form-group">
         <label>Category</label>
         <select class="form-control" name="CategoryID">
-            @foreach (var category in Model)
+            @foreach (var category in Model.AvaliableCategories)
             {
-                <option value="@category.Id">@category.Name</option>
+                
+                <option value="@category.Id" >@category.Name</option>
             }
         </select>
 

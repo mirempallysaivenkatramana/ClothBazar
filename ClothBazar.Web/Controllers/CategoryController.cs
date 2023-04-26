@@ -1,5 +1,6 @@
 ﻿using ClothBazar.Entities;
 using ClothBazar.Services;
+using ClothBazar.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,31 +19,41 @@ namespace ClothBazar.Web.Controllers
         
         public ActionResult Index()
         {
-                //var categories = categoryservice.GetCategories();
-                List<Category> categories = categoryservice.GetCategories();
-                return View(categories);
+                ////var categories = categoryservice.GetCategories();
+                //List<Category> categories = categoryservice.GetCategories();
+                return View();
         }
         public ActionResult CategoryTable(string Search)
         {
+            CategorySearchViewModel model = new CategorySearchViewModel();
             //var categories = categoryservice.GetCategories();
-            List<Category> categories = categoryservice.GetCategories();
+            model.Categories = categoryservice.GetCategories();
             if (string.IsNullOrEmpty(Search) == false)
             {
-                categories = categories.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
+                model.SearchTerm = Search;
+                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
             }
-            return PartialView(categories);
+            return PartialView("categoryTable", model);
         }
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            NewCategoryViewModel model = new NewCategoryViewModel();
+
+            //model.AvaliableCategories = categoryservice.GetCategories();
+            return PartialView(model);
         }
         [HttpPost]
-        public ActionResult Create(Category category)
+        public ActionResult Create(NewCategoryViewModel model)
         {
-            
-         categoryservice.SaveCategory(category);
-            return RedirectToAction("Index");
+            var newcategory = new Category();
+            newcategory.Name = model.Name;
+            newcategory.Description = model.Description;
+            newcategory.ImageURL = model.ImageURL;
+
+            categoryservice.SaveCategory(newcategory);
+            return RedirectToAction("CategoryTable");
+
         }
         [HttpGet]
         public ActionResult Edit(int Id)

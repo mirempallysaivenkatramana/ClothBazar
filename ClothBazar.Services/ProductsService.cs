@@ -7,15 +7,34 @@ using System.Text;
 using System.Threading.Tasks;
 using ClothBazar.Database;
 using System.Data.Entity;
+using System.Security.Cryptography;
 
 namespace ClothBazar.Services
 {
     public class ProductsService
     {
-        CBContext context = new CBContext();
-        public List<Product> GetProducts()
+        #region Singleton
+        public static ProductsService Instance
         {
-            return context.Products.Include(x=>x.Category).ToList();
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ProductsService();
+                }
+                return instance;
+            }
+        }
+        private static ProductsService instance { get; set; } //private modefier because instance should not be created out side class
+        private ProductsService()
+        {
+        }
+        #endregion
+        CBContext context = new CBContext();
+        public List<Product> GetProducts(/*int pageNo*/)
+        {
+            //int pagesize = 5;
+            return context.Products./*OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize)*/Include(x=>x.Category).ToList();//to skip
         }
         public List<Product> GetProducts(List<int> Ids)
         {
@@ -23,7 +42,7 @@ namespace ClothBazar.Services
         }
         public Product GetProduct(int Id)
         {
-            return context.Products.Find(Id);
+            return context.Products.Where(x => x.Id == Id).Include(x => x.Category).FirstOrDefault();
         }
         public void SaveProduct(Product product)
         {
@@ -34,7 +53,11 @@ namespace ClothBazar.Services
         }
         public void UpdateProduct(Product product)
         {
-            context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+            // context.Entry(product).State = EntityState.Detached;
+            //context.Entry(product).State = EntityState.Modified;
+
+            //context.SaveChanges();
+            context.Entry(product).CurrentValues.SetValues(product);
             context.SaveChanges();
         }
         public void DeleteProduct(int Id)               

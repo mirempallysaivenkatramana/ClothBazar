@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClothBazar.Database;
+using System.Data.Entity;
 
 namespace ClothBazar.Services
 {
@@ -14,7 +15,7 @@ namespace ClothBazar.Services
         CBContext context = new CBContext();
         public List<Category> GetCategories()
         {
-            return context.Categories.ToList();
+            return context.Categories.Include(X=>X.Products).ToList();
         }
         public Category GetCategorie(int Id)
         {

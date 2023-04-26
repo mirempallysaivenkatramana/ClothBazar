@@ -1,24 +1,33 @@
 ﻿@model List<ClothBazar.Entities.Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categories";
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
+<section class="flat-row flat-iconbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2 class="title">
+                        Categories Table
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div align="center" id="tablecontainer">
+            @{
+                Html.RenderAction("categoryTable");
 
-<div class="container">
-    <h2 align="centre">Index</h2>
-    <div align="center" id="tablecontainer">
-        @{
-            Html.RenderAction("categoryTable");
+                // Html.RenderAction("create");
+            }
+        </div>
+        <div align="center" id="actioncontainer">
 
-            // Html.RenderAction("create");
-        }
+        </div>
     </div>
-    <div align="center" id="actioncontainer">
-
-    </div>
-</div>
+    </section>
 
 
 
