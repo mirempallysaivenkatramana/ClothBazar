@@ -79,7 +79,7 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Edit(EditProductViewModels model)
         {
-            var exitingproduct = new Product();
+            var exitingproduct = ProductsService.Instance.GetProduct(model.Id);
             exitingproduct.Name = model.Name;
             exitingproduct.Description = model.Description;
             exitingproduct.Price = model.Price;

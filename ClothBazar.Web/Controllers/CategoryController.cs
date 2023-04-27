@@ -58,14 +58,29 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int Id)
         {
+            EditCategoryViewModel model = new EditCategoryViewModel();
             var category = categoryservice.GetCategorie(Id);
-            return PartialView(category);
+
+            model.Id = category.Id;
+            model.Name = category.Name;
+            model.Description = category.Description;
+            model.ImageURL = category.ImageURL;
+            model.IsFeatured = category.IsFeatured;
+            return PartialView(model);
         }
         [HttpPost]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(EditCategoryViewModel model)
         {
-            categoryservice.UpdateCategory(category);
-            return RedirectToAction("Index");
+           
+            //return RedirectToAction("Index");
+            var exitingcategory = categoryservice.GetCategorie(model.Id);
+            exitingcategory.Name = model.Name;
+            exitingcategory.Description = model.Description;
+            exitingcategory.ImageURL = model.ImageURL;
+            exitingcategory.IsFeatured = model.IsFeatured;
+
+            categoryservice.UpdateCategory(exitingcategory);
+            return RedirectToAction("CategoryTable");
         }
         [HttpGet]
         public ActionResult Delete(int Id)

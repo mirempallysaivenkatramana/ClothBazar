@@ -1,13 +1,15 @@
-﻿@model ClothBazar.Entities.Category
+﻿@model ClothBazar.Web.ViewModels.EditCategoryViewModel
 @{
     ViewBag.Title = "Edit category";
 
     var truechecked = Model.IsFeatured ? "checked" : string.Empty;
     var falsechecked = !Model.IsFeatured ? "checked" : string.Empty;
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/default image.png";
 }
 
 <h2>Edit category</h2>
-<form method="post">
+@*<form method="post">
     <input type="hidden" name="Id" value="@Model.Id" />
 
     <label>Name</label>
@@ -20,5 +22,84 @@
     <input name="IsFeatured" type="radio" value="true"  @truechecked/>true
     <input name="IsFeatured" type="radio" value="false" @falsechecked/>false
     <button type="submit">save</button>
-</form>
+</form>*@
 
+<form id="editcategory">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="form-group">
+        <label class="form-control">Name</label>
+        <input class="form-control" name="name" value="@Model.Name"/>
+    </div>
+    <div class="form-check">
+        <label class="form-control">Description</label>
+        <input class="form-control" name="Description" value="@Model.Description"/>
+    </div>
+    <div class="form-group">
+        <label class="form-control">Image</label>
+        <input id="ImageURL" name="ImageURL" type="hidden" value="@Model.ImageURL"/>
+        <input class="form-control" id="ImageUpload" name="Image" type="file" accept=".jpg, .png" />
+        <div class="thumb">
+            <img id="categoryImage" src="@imageURL" class="img-thumbnail img-fluid"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>IsFeatured?</label>
+        <div class="input-group">
+            <div class="radio form-control">
+                <label><input name="IsFeatured" type="radio" value="true" @truechecked/>True</label>
+            </div>
+            <div class="radio form-control">
+                <label><input name="IsFeatured" type="radio" value="false" @falsechecked/>False</label>
+            </div>
+        </div>
+    </div>
+    <button id="updateBtn" class="btn btn-primary" type="button">update</button>
+</form>
+<script>
+    $("#ImageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+        var totalfiles = element.files.length;
+
+        for (var i = 0; i < totalfiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+        $.ajax({
+            type: 'post',
+            url: '/shared/UpdateImage',
+            datatype: 'JSON',
+            data: formData,
+            contentType: false,
+            processData: false
+
+        })
+            .done(function (response) {
+                console.log(response)
+                if (response.Success) {
+                    $("#ImageURL").val(response.ImageURL);
+                    $("#categoryImage").attr("src", response.ImageURL);
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
+    $("#updateBtn").click(function () {
+
+        $.ajax({
+            type: 'post',
+            url: '/category/Edit',
+            data: $('#editcategory').serialize()
+        })
+            .done(function (response) {
+                $("#tablecontainer").html(response);
+                $("#actioncontainer").html("");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+</script>
