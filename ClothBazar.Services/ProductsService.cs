@@ -31,10 +31,10 @@ namespace ClothBazar.Services
         }
         #endregion
         CBContext context = new CBContext();
-        public List<Product> GetProducts(/*int pageNo*/)
+        public List<Product> GetProducts(int pageNo)
         {
-            //int pagesize = 5;
-            return context.Products./*OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize)*/Include(x=>x.Category).ToList();//to skip
+            int pagesize = 5;
+            return context.Products.OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize).Include(x=>x.Category).ToList();//to skip
         }
         public List<Product> GetProducts(List<int> Ids)
         {

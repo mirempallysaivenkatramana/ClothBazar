@@ -15,10 +15,13 @@
                 <div class="form-group">
                     <label>actions</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="SearchBtn">Search</button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
+                            <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="reset" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="newBtn">New</button>
                         </div>
                     </div>
@@ -77,29 +80,53 @@
         </tbody>
     </table>
     <div>
-        @*<button id="PreviousRecord" data-pageNo="@product">Previous</button>
-        <button id="Next">Next</button>*@ 
+        @if(Model.pageNo!=1)
+        {
+        <button class="pageButtons" data-pageNo="@(Model.pageNo-1)">Previous</button>
+        }
+        <button class="pageButtons" data-pageNo="@(Model.pageNo+1)">Next</button>
     </div>
 </div>
 <script>
-    $("#newBtn").click(function () {
+    $(".pageButtons").click(function () {
         $.ajax({
-            url: '/Product/Create',
+            url: '@Url.Action("ProductTable", "Product")',//'/Product/productTable',
+            data: {
+                pageNo: $(this).attr("data-pageNo")
+            }
         })
             .done(function (response) {
-                $("#actioncontainer").html(response);
+                $("#tablecontainer").html(response);
                 focusAction();
             })
-        
+
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
     });
+
+    //$("#NextRecords").click(function () {
+    //    $.ajax({
+    //        url: '/Product/productTable',
+    //        data: {
+    //            pageNo: $(this).attr("data-pageNo")
+    //        }
+    //    })
+    //        .done(function (response) {
+    //            $("#tablecontainer").html(response);
+    //            focusAction();
+    //        })
+
+    //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+    //            alert("fail");
+    //        });
+    //});
+
     $("#SearchBtn").click(function () {
         var searchvalue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
             data: {
                 search: searchvalue
             }
@@ -111,23 +138,41 @@
                 alert("fail");
             });
     });
+
+    $("#resetBtn").click(function () {
+        var searchvalue ='';
+
+        $.ajax({
+            url: '@Url.Action("ProductTable", "Product")',//'/Product/ProductTable',
+            data: {
+                search: searchvalue
+            }
+        })
+            .done(function (response) {
+                $("#tablecontainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/Product/Create',
+            url: '@Url.Action("Create", "Product")',//'/Product/Create',
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
                 focusAction();
             })
-        
+
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
     });
     $(".editBtn").click(function () {
         $.ajax({
-            
-            url: '/Product/edit',
+
+            url: '@Url.Action("edit", "Product")',//'/Product/edit',
             data: {
                 Id: $(this).attr('data-id')
             }
@@ -136,7 +181,7 @@
                 $("#actioncontainer").html(response);
                 focusAction();
             })
-        
+
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
@@ -153,7 +198,7 @@
                 if (willDelete) {
                     $.ajax({
                 type: 'post',
-                url: '/Product/delete',
+                url: '@Url.Action("delete", "Product")',//'/Product/delete',
                 data: {
                     Id: $(this).attr('data-id')
                 }
@@ -169,7 +214,7 @@
                     alert("fail");
 
                 });
-                    
+
                 //} else {
                 //    swal("Your imaginary file is safe!");
                 }

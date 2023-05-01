@@ -10,6 +10,7 @@ namespace ClothBazar.Web.ViewModels
 {
     public class ProductSearchViewModel
     {
+        public int pageNo { get; set; }
         public List<Product> Products { get; set; }
 
         public string SearchTerm { get; set; }

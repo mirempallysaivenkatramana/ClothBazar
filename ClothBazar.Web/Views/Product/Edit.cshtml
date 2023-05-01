@@ -53,7 +53,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/Product/Edit',
+            url: '@Url.Action("edit", "Product")',//'/Product/Edit',
             data: $('#editproduct').serialize()
         })
             .done(function (response) {

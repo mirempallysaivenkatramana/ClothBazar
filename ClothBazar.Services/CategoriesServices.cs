@@ -12,10 +12,27 @@ namespace ClothBazar.Services
 {
     public class CategoriesServices
     {
+        #region Singleton
+        public static CategoriesServices Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new CategoriesServices();
+                }
+                return instance;
+            }
+        }
+        private static CategoriesServices instance { get; set; } //private modefier because instance should not be created out side class
+        private CategoriesServices()
+        {
+        }
+        #endregion
         CBContext context = new CBContext();
         public List<Category> GetCategories()
         {
-            return context.Categories.Include(X=>X.Products).ToList();
+            return context.Categories.Include(X => X.Products).ToList();
         }
         public Category GetCategorie(int Id)
         {

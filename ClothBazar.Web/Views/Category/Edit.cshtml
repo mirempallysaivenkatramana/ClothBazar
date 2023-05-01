@@ -68,7 +68,7 @@
         }
         $.ajax({
             type: 'post',
-            url: '/shared/UpdateImage',
+            url: '@Url.Action("UpdateImage", "shared")',//'/shared/UpdateImage',
             datatype: 'JSON',
             data: formData,
             contentType: false,
@@ -91,7 +91,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/category/Edit',
+            url: '@Url.Action("Edit", "Category")',//'/category/Edit',
             data: $('#editcategory').serialize()
         })
             .done(function (response) {

@@ -30,6 +30,7 @@
                         <div class="col-md-6">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="SearchBtn">Search</button>
                         </div>
+                        
                         <div class="col-md-6">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="newBtn">New</button>
                         </div>
@@ -59,7 +60,6 @@
                     <td>@category.Name</td>
                     <td>
                         @category.Products.Count
-
                     </td>
 
                     <td class="wrap-td">
@@ -82,13 +82,13 @@
     </div>
 </div>
 <script>
-    
-    
+
+
     $("#SearchBtn").click(function () {
         var searchvalue = $("#searchTxt").val();
 
         $.ajax({
-            url: '/category/categoryTable',
+            url: '@Url.Action("CategoryTable", "Category")',//'/category/categoryTable',
             data: {
                 search: searchvalue
             }
@@ -100,9 +100,12 @@
                 alert("fail");
             });
     });
+
+
+
     $("#newBtn").click(function () {
         $.ajax({
-            url: '/category/Create',
+            url: '@Url.Action("Create", "Category")',//'/category/Create',
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
@@ -115,7 +118,7 @@
     $(".editBtn").click(function () {
         $.ajax({
 
-            url: '/category/edit',
+            url:'@Url.Action("edit","category")',//'/category/edit',
             data: {
                 Id: $(this).attr('data-id')
             }
@@ -139,7 +142,7 @@
                 if (willDelete) {
                     $.ajax({
                         type: 'post',
-                        url: '/category/delete',
+                        url:' @Url.Action("delete","category")',//'/category/delete',
                         data: {
                             Id: $(this).attr('data-id')
                         }

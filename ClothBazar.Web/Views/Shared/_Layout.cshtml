@@ -1,7 +1,6 @@
 ﻿
 @{
-    ClothBazar.Services.ConfigurationsService configurationsservices = new ClothBazar.Services.ConfigurationsService();
-    var FacebookURL = configurationsservices.GetConfig("FacebookURL");
+    var FacebookURL = ClothBazar.Services.ConfigurationsService.Instance.GetConfig("FacebookURL");
 }
 <!DOCTYPE html>
 <html>

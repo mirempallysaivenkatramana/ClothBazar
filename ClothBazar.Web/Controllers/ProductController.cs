@@ -13,7 +13,7 @@ namespace ClothBazar.Web.Controllers
     {
        //ProductSearchViewModel model = new ProductSearchViewModel();
         // ProductsService productsService = new ProductsService();
-        CategoriesServices categoryservice = new CategoriesServices();
+       // CategoriesServices categoryservice = new CategoriesServices();
         // GET: Product
         public ActionResult Index()
         {
@@ -24,9 +24,24 @@ namespace ClothBazar.Web.Controllers
         {
             ProductSearchViewModel model = new ProductSearchViewModel();
 
-            //pageNo =pageNo.HasValue? pageNo:1;
-
-            model.Products = ProductsService.Instance.GetProducts(/*pageNo.Value*/);
+            model.pageNo = pageNo.HasValue? pageNo.Value>0 ? pageNo.Value:1:1;
+            //similar to above
+            //if(pageNo.HasValue)
+            //{
+            //    if(pageNo.Value>0)
+            //    {
+            //        model.pageNo = pageNo.Value;
+            //    }
+            //    else
+            //    {
+            //        model.pageNo = 1;
+            //    }
+            //}
+            //else
+            //{
+            //    model.pageNo = 1;
+            //}
+            model.Products = ProductsService.Instance.GetProducts(model.pageNo);
             if (string.IsNullOrEmpty(Search) == false)
             {
                 model.SearchTerm = Search;
@@ -44,21 +59,21 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            CategoriesServices cateroryservices = new CategoriesServices();
+            //CategoriesServices cateroryservices = new CategoriesServices();
             NewProductViewModel model = new NewProductViewModel();
 
-            model.AvaliableCategories = cateroryservices.GetCategories();
+            model.AvaliableCategories = CategoriesServices.Instance.GetCategories();
             return PartialView(model);
         }
         [HttpPost]
         public ActionResult Create(NewProductViewModel model)
         {
-            CategoriesServices categoryservice = new CategoriesServices();
+           // CategoriesServices categoryservice = new CategoriesServices();
             var newproduct = new Product();
             newproduct.Name = model.Name;
             newproduct.Description = model.Description;
             newproduct.Price = model.Price;
-            newproduct.Category = categoryservice.GetCategorie(model.CategoryId);
+            newproduct.Category = CategoriesServices.Instance.GetCategorie(model.CategoryId);
             ProductsService.Instance.SaveProduct(newproduct);
             return RedirectToAction("ProductTable");
         }
@@ -73,7 +88,7 @@ namespace ClothBazar.Web.Controllers
             model.Description = product.Description;
             model.Price = product.Price;
             model.CategoryId = product.Category!=null?product.Category.Id:0;
-            model.AvaliableCategories = categoryservice.GetCategories();
+            model.AvaliableCategories = CategoriesServices.Instance.GetCategories();
             return PartialView(model);
         }
         [HttpPost]
@@ -83,7 +98,7 @@ namespace ClothBazar.Web.Controllers
             exitingproduct.Name = model.Name;
             exitingproduct.Description = model.Description;
             exitingproduct.Price = model.Price;
-            exitingproduct.Category = categoryservice.GetCategorie(model.CategoryId);
+            exitingproduct.Category = CategoriesServices.Instance.GetCategorie(model.CategoryId);
             
             ProductsService.Instance.UpdateProduct(exitingproduct);
             return RedirectToAction("ProductTable");
