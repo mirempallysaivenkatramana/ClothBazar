@@ -35,10 +35,10 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>product Name</td>
-                <td>category</td>
-                <td>Price</td>
-                <td class="wrap-td">Actions</td>
+                <th class="font-weight-bold">product Name</th>
+                <th class="font-weight-bold">category</th>
+                <th class="font-weight-bold">Price</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -162,7 +162,7 @@
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
-                focusAction();
+                focusAction("actioncontainer");
             })
 
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -179,7 +179,7 @@
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
-                focusAction();
+                focusAction("actioncontainer");
             })
 
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {

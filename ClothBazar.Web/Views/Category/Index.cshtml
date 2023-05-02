@@ -29,6 +29,14 @@
     </div>
     </section>
 
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().Top - 100
+        }, 1000);
+    }
+</script>
+
 
 
 

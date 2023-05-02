@@ -1,5 +1,4 @@
-﻿
-@model ClothBazar.Web.ViewModels.CategorySearchViewModel
+﻿@model ClothBazar.Web.ViewModels.CategorySearchViewModel
 @{
     ViewBag.Title = "CategoryTable";
 }
@@ -27,11 +26,13 @@
                 <div class="form-group">
                     <label>actions</label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="SearchBtn">Search</button>
                         </div>
-                        
-                        <div class="col-md-6">
+                        <div class="col-md-4 pr-0">
+                            <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="reset" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
                             <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="newBtn">New</button>
                         </div>
                     </div>
@@ -45,9 +46,9 @@
         <thead>
             <tr>
                 
-                <td>category Name</td>
-                <td>Products</td>
-                <td class="wrap-td">Actions</td>
+                <th class="font-weight-bold">category Name</th>
+                <th class="font-weight-bold">Products</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -85,7 +86,8 @@
 
 
     $("#SearchBtn").click(function () {
-        var searchvalue = $("#searchTxt").val();
+        var searchvalue = $("#searchTxt").val()
+            ;
 
         $.ajax({
             url: '@Url.Action("CategoryTable", "Category")',//'/category/categoryTable',
@@ -101,7 +103,22 @@
             });
     });
 
+    $("#resetBtn").click(function () {
+        var searchvalue = '';
 
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',//'/category/categoryTable',
+            data: {
+                search: searchvalue
+            }
+        })
+            .done(function (response) {
+                $("#tablecontainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
 
     $("#newBtn").click(function () {
         $.ajax({
@@ -109,7 +126,7 @@
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
-                focusAction();
+                focusAction("actioncontainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -125,6 +142,7 @@
         })
             .done(function (response) {
                 $("#actioncontainer").html(response);
+                focusAction("actioncontainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
@@ -180,11 +198,11 @@
         //        });
         //}
     });
-    function focusAction() {
-            $('html, body').animate({
-                scrollTop: $("actioncontainer").offset().Top - 100
-            }, 1000);
-        }
+    //function focusAction() {
+    //        $('html, body').animate({
+    //            scrollTop: $("actioncontainer").offset().Top - 100
+    //        }, 1000);
+    //    }
 </script>
 
 

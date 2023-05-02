@@ -45,6 +45,7 @@
         <input name="Price" class="form-control" value="@Model.Price" />
     </div>
     <button id="updateBtn" class="btn btn-danger" type="button">Update</button>
+    <button id="cancelBtn" class="btn btn-danger" type="reset">cancel</button>
 </form>
 
 
@@ -59,9 +60,15 @@
             .done(function (response) {
                 $("#tablecontainer").html(response);
                 $("#actioncontainer").html("");
+                focusAction("tablecontainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
+    });
+
+    $("#cancelBtn").click(function () {
+        $("#actioncontainer").html("");
+        focusAction("tablecontainer");
     });
 </script>

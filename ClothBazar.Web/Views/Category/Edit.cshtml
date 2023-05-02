@@ -28,32 +28,33 @@
     <input type="hidden" name="Id" value="@Model.Id" />
     <div class="form-group">
         <label class="form-control">Name</label>
-        <input class="form-control" name="name" value="@Model.Name"/>
+        <input class="form-control" name="name" value="@Model.Name" />
     </div>
     <div class="form-check">
         <label class="form-control">Description</label>
-        <input class="form-control" name="Description" value="@Model.Description"/>
+        <input class="form-control" name="Description" value="@Model.Description" />
     </div>
     <div class="form-group">
         <label class="form-control">Image</label>
-        <input id="ImageURL" name="ImageURL" type="hidden" value="@Model.ImageURL"/>
+        <input id="ImageURL" name="ImageURL" type="hidden" value="@Model.ImageURL" />
         <input class="form-control" id="ImageUpload" name="Image" type="file" accept=".jpg, .png" />
         <div class="thumb">
-            <img id="categoryImage" src="@imageURL" class="img-thumbnail img-fluid"/>
+            <img id="categoryImage" src="@imageURL" class="img-thumbnail img-fluid" />
         </div>
     </div>
     <div class="form-group">
         <label>IsFeatured?</label>
         <div class="input-group">
             <div class="radio form-control">
-                <label><input name="IsFeatured" type="radio" value="true" @truechecked/>True</label>
+                <label><input name="IsFeatured" type="radio" value="true" @truechecked />True</label>
             </div>
             <div class="radio form-control">
-                <label><input name="IsFeatured" type="radio" value="false" @falsechecked/>False</label>
+                <label><input name="IsFeatured" type="radio" value="false" @falsechecked />False</label>
             </div>
         </div>
     </div>
     <button id="updateBtn" class="btn btn-primary" type="button">update</button>
+    <button id="cancelBtn" class="btn btn-primary" type="button">cancel</button>
 </form>
 <script>
     $("#ImageUpload").change(function () {
@@ -97,9 +98,17 @@
             .done(function (response) {
                 $("#tablecontainer").html(response);
                 $("#actioncontainer").html("");
+                focusAction("tablecontainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
     });
+
+    $("#cancelBtn").click(function () {
+
+            $("#actioncontainer").html("");
+            focusAction("tablecontainer");
+    });
+
 </script>

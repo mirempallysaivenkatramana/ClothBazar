@@ -10,8 +10,8 @@
         <select class="form-control" name="CategoryID">
             @foreach (var category in Model.AvaliableCategories)
             {
-                
-                <option value="@category.Id" >@category.Name</option>
+
+                <option value="@category.Id">@category.Name</option>
             }
         </select>
 
@@ -29,6 +29,7 @@
         <input class="form-control" name="Price" />
     </div>
     <button id="saveBtn" class="btn btn-danger" type="button">save</button>
+    <button id="cancelBtn" class="btn btn-danger" type="reset">Cancel</button>
 </form>
 
 
@@ -45,9 +46,14 @@
             .done(function (response) {
                 $("#tablecontainer").html(response);
                 $("#actioncontainer").html("");
+                focusAction("actioncontainer");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("fail");
             });
+    });
+    $("#cancelBtn").click(function () {
+        $("#actioncontainer").html("");
+        focusAction("actioncontainer");
     });
 </script>
