@@ -88,9 +88,10 @@
     </div>
 </div>
 <script>
+   // $('#ProductTable').DataTable();
     $(".pageButtons").click(function () {
         $.ajax({
-            url: '@Url.Action("ProductTable", "Product")',//'/Product/productTable',
+            url: '@Url.Action("ProductTable", "Product")',/*'/Product/productTable',*/
             data: {
                 pageNo: $(this).attr("data-pageNo")
             }

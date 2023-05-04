@@ -30,13 +30,51 @@ namespace ClothBazar.Services
         }
         #endregion
         CBContext context = new CBContext();
-        public List<Category> GetCategories()
+        public List<Category> GetCategories(string Search,int pageno)
         {
-            return context.Categories.Include(X => X.Products).ToList();
+            int pagesize = 3;
+            if (string.IsNullOrEmpty(Search) == false)
+            {
+                return context.Categories.Where(Category => Category.Name != null &&
+                Category.Name.ToLower().Contains(Search.ToLower()))
+                .OrderBy(x => x.Id)
+                .Skip((pageno - 1) * pagesize)
+                .Take(pagesize)
+                .Include(x => x.Products)
+                .ToList();
+            }
+            else
+            {
+                return context.Categories
+                    .OrderBy(x => x.Id)
+                    .Skip((pageno - 1) * pagesize)
+                    .Take(pagesize)
+                    .Include(x => x.Products)
+                    .ToList();
+            }
+            }
+        public int GetCategoriesCount(string Search)
+        {
+            if (string.IsNullOrEmpty(Search) == false)
+            {
+                return context.Categories.Where(Category => Category.Name != null &&
+                Category.Name.ToLower().Contains(Search.ToLower())).Count();
+            }
+            else
+            {
+                return context.Categories.Count();
+            }
+
+            
         }
         public Category GetCategorie(int Id)
         {
             return context.Categories.Find(Id);
+        }
+        public List<Category> GetallCategories()
+        {
+            //int pagesize = 5;
+            return context.Categories.ToList();
         }
         public List<Category> GetFeaturedCategories()
         {

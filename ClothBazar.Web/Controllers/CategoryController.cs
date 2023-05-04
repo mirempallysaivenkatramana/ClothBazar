@@ -3,9 +3,11 @@ using ClothBazar.Services;
 using ClothBazar.Web.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 
 namespace ClothBazar.Web.Controllers
@@ -23,17 +25,26 @@ namespace ClothBazar.Web.Controllers
                 //List<Category> categories = categoryservice.GetCategories();
                 return View();
         }
-        public ActionResult CategoryTable(string Search)
+        public ActionResult CategoryTable(string Search,int? pageno)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
+            model.SearchTerm = Search;
+            pageno = pageno.HasValue ? pageno.Value > 0 ? pageno.Value : 1 : 1;
+            var totalRecords = CategoriesServices.Instance.GetCategoriesCount(Search);
             //var categories = categoryservice.GetCategories();
-            model.Categories = CategoriesServices.Instance.GetCategories();
-            if (string.IsNullOrEmpty(Search) == false)
+            model.Categories = CategoriesServices.Instance.GetCategories(Search,pageno.Value);
+            if (model.Categories != null)
             {
-                model.SearchTerm = Search;
-                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(Search.ToLower())).ToList();
+                
+                model.pager = new Pager(totalRecords, pageno,3);
+               // model.Categories=model.Categories.OrderBy(x => x.Id).Skip((pageNo - 1) * pagesize).Take(pagesize).ToList();
+                
+                return PartialView("categoryTable", model);
             }
-            return PartialView("categoryTable", model);
+            else
+            {
+                return HttpNotFound();
+            }
         }
         [HttpGet]
         public ActionResult Create()

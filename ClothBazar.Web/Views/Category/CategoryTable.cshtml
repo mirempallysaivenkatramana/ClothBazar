@@ -78,12 +78,46 @@
         </tbody>
     </table>
     <div>
-        @*<button id="PreviousRecord" data-pageNo="@product">Previous</button>
-            <button id="Next">Next</button>*@
+        @if (Model.pager != null)
+        {
+            if (Model.pager.CurrentPage > 1)
+            {
+                <button class="pageButtons" data-pageno="1">First</button>
+                <button class="pageButtons" data-pageno="@(Model.pager.CurrentPage-1)">Previous</button>
+            }
+            for (var page = Model.pager.StartPage; page <= Model.pager.EndPage; page++)
+            {
+                string activeclass = Model.pager.CurrentPage == page ? "active bg-info" : string.Empty;
+                <button class="@activeclass pageButtons" data-pageno="@page">@page</button>
+            }
+            if (Model.pager.CurrentPage < Model.pager.TotalPages)
+            {
+                <button class="pageButtons" data-pageno="@(Model.pager.CurrentPage+1)">Next</button>
+                <button class="pageButtons"data-pageno="@(Model.pager.EndPage)">Last</button>
+            }
+            @*<button class="pageButtons" data-pageNo="@(Model.pageNo - 1)">Previous</button>
+            <button class="pageButtons" data-pageNo="@(Model.pageNo + 1)">Next</button>*@
+        }
     </div>
 </div>
 <script>
 
+    $(".pageButtons").click(function () {
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',/*'/Product/productTable',*/
+            data: {
+                pageNo: $(this).attr("data-pageNo")
+            }
+        })
+            .done(function (response) {
+                $("#tablecontainer").html(response);
+                focusAction();
+            })
+
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
 
     $("#SearchBtn").click(function () {
         var searchvalue = $("#searchTxt").val()

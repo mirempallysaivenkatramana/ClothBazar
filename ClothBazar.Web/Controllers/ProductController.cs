@@ -62,7 +62,7 @@ namespace ClothBazar.Web.Controllers
             //CategoriesServices cateroryservices = new CategoriesServices();
             NewProductViewModel model = new NewProductViewModel();
 
-            model.AvaliableCategories = CategoriesServices.Instance.GetCategories();
+            model.AvaliableCategories = CategoriesServices.Instance.GetallCategories();
             return PartialView(model);
         }
         [HttpPost]
@@ -73,7 +73,8 @@ namespace ClothBazar.Web.Controllers
             newproduct.Name = model.Name;
             newproduct.Description = model.Description;
             newproduct.Price = model.Price;
-            newproduct.Category = CategoriesServices.Instance.GetCategorie(model.CategoryId);
+            newproduct.Category =CategoriesServices.Instance.GetCategorie(model.CategoryId);
+           // newproduct.ImageURL = model.ImageURL;
             ProductsService.Instance.SaveProduct(newproduct);
             return RedirectToAction("ProductTable");
         }
@@ -88,7 +89,9 @@ namespace ClothBazar.Web.Controllers
             model.Description = product.Description;
             model.Price = product.Price;
             model.CategoryId = product.Category!=null?product.Category.Id:0;
-            model.AvaliableCategories = CategoriesServices.Instance.GetCategories();
+           // model.ImageURL = product.ImageURL;
+
+            model.AvaliableCategories = CategoriesServices.Instance.GetallCategories();
             return PartialView(model);
         }
         [HttpPost]
@@ -99,6 +102,7 @@ namespace ClothBazar.Web.Controllers
             exitingproduct.Description = model.Description;
             exitingproduct.Price = model.Price;
             exitingproduct.Category = CategoriesServices.Instance.GetCategorie(model.CategoryId);
+           // exitingproduct.ImageURL = model.ImageURL;
             
             ProductsService.Instance.UpdateProduct(exitingproduct);
             return RedirectToAction("ProductTable");

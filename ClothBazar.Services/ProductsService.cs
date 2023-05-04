@@ -33,7 +33,7 @@ namespace ClothBazar.Services
         CBContext context = new CBContext();
         public List<Product> GetProducts(int pageNo)
         {
-            int pagesize = 5;
+            int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
             return context.Products.OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize).Include(x=>x.Category).ToList();//to skip
         }
         public List<Product> GetProducts(List<int> Ids)
@@ -54,10 +54,11 @@ namespace ClothBazar.Services
         public void UpdateProduct(Product product)
         {
             // context.Entry(product).State = EntityState.Detached;
-            //context.Entry(product).State = EntityState.Modified;
+            context.Entry(product).State = EntityState.Modified;
+            //context.Entry(product).State = EntityState.Unchanged;
 
             //context.SaveChanges();
-            context.Entry(product).CurrentValues.SetValues(product);
+            // context.Entry(product).CurrentValues.SetValues(product);
             context.SaveChanges();
         }
         public void DeleteProduct(int Id)               

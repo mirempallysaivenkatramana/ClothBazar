@@ -1,6 +1,8 @@
 ﻿@model ClothBazar.Web.ViewModels.EditProductViewModels
 @{
     ViewBag.Title = "Edit";
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL)?Model.ImageURL: "/Content/images/system/default image.png";
 }
 
 <h2>Edit product</h2>
@@ -20,36 +22,110 @@
 </form>*@
 
 <form id="editproduct">
-    <div class="form-group">
-        <input type="hidden" name="Id" value="@Model.Id" />
-        <label>Category</label>
-        <select class="form-control" name="CategoryID">
-            @foreach (var category in Model.AvaliableCategories)
-            {
-                var selected = category.Id == Model.CategoryId ? "selected" : string.Empty;
-                <option value="@category.Id" @selected>@category.Name</option>
-            }
-        </select>
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="row">
+        <div class="form-group">
+            @*<input type="hidden" name="Id" value="@Model.Id" />*@
+            <label>Category</label>
+            <select class="form-control" name="CategoryID">
+                @foreach (var category in Model.AvaliableCategories)
+                {
+                    var selected = category.Id == Model.CategoryId ? "selected" : string.Empty;
+                    <option value="@category.Id" @selected>@category.Name</option>
+                }
+            </select>
 
-    </div>
-    <div class="form-group">
-        <label class="form-control">Product Name</label>
-        <input name="name" class="form-control" value="@Model.Name" />
-    </div>
-    <div class="form-check">
-        <label class="form-control">Description</label>
-        <input name="Description" class="form-control" value="@Model.Description" />
-    </div>
-    <div class="form-check">
-        <label class="form-control">Price</label>
-        <input name="Price" class="form-control" value="@Model.Price" />
-    </div>
-    <button id="updateBtn" class="btn btn-danger" type="button">Update</button>
-    <button id="cancelBtn" class="btn btn-danger" type="reset">cancel</button>
+        </div>
+        <div class="form-group">
+            <label class="form-control">Product Name</label>
+            <input name="name" class="form-control" value="@Model.Name" />
+        </div>
+        <div class="form-check">
+            <label class="form-control">Description</label>
+            <input name="Description" class="form-control" value="@Model.Description" />
+        </div>
+        <div class="form-check">
+            <label class="form-control">Price</label>
+            <input name="Price" class="form-control" value="@Model.Price" />
+        </div>
+        <div class="form-group">
+            <label class="form-control">Image</label>
+            <input id="ImageURL" name="ImageURL" type="hidden" />
+            <input class="form-control" id="ImageUpload" name="Image" type="file" accept=".jpg, .png" />
+        </div>
+        <button id="updateBtn" class="btn btn-danger" type="button">Update</button>
+        <button id="cancelBtn" class="btn btn-danger" type="reset">cancel</button>
+    </div>-->
+    <div class="col-md-4">
+        <div class="thumb">
+            <img id="productImage" class="img-thumbnail img-fluid" src="@imageURL" />
+        </div>
+    </div>-->
+
+
+    @*<div class="form-group">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <label>Category</label>
+            <select class="form-control" name="CategoryID">
+                @foreach (var category in Model.AvaliableCategories)
+                {
+                    var selected = category.Id == Model.CategoryId ? "selected" : string.Empty;
+                    <option value="@category.Id" @selected>@category.Name</option>
+                }
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label class="form-control">Product Name</label>
+            <input name="name" class="form-control" value="@Model.Name" />
+        </div>
+        <div class="form-check">
+            <label class="form-control">Description</label>
+            <input name="Description" class="form-control" value="@Model.Description" />
+        </div>
+        <div class="form-check">
+            <label class="form-control">Price</label>
+            <input name="Price" class="form-control" value="@Model.Price" />
+        </div>
+        <button id="updateBtn" class="btn btn-danger" type="button">Update</button>
+        <button id="cancelBtn" class="btn btn-danger" type="reset">cancel</button>*@
 </form>
 
 
 <script>
+
+     $("#ImageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+        var totalfiles = element.files.length;
+
+        for (var i = 0; i < totalfiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+        $.ajax({
+            type: 'post',
+            url:'@Url.Action("UpdateImage", "shared")',// '/shared/UpdateImage',
+            datatype: 'JSON',
+            data: formData,
+            contentType: false,
+            processData: false
+
+        })
+            .done(function (response) {
+                debugger;
+                console.log(response)
+                if (response.Success) {
+                    $("#ImageURL").val(response.ImageURL);
+                    $("#productImage").attr("src", response.ImageURL);
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("fail");
+            });
+    });
+
     $("#updateBtn").click(function () {
 
         $.ajax({
