@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <label class="form-control">Name</label>
+                <label class="form-control">Name<span class="text-danger">*</span></label>
                 <input class="form-control" name="name" />
             </div>
             <div class="form-group">
@@ -118,23 +118,67 @@
                 alert("fail");
             });
     });
+
+    $('#createcategory').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            Description: {
+                maxlength: 50
+            }
+        },
+        messages: {
+            name: {
+                required: 'Name is required',
+                minlength: 'minimum length is 5',
+                maxlength: 'maximun length is 50'
+            },
+            Description: {
+                maxlength: 'maximun length is 500'
+            }
+        },
+    });
     $("#saveBtn").click(function () {
-        var searchvalue = $("#searchTxt").val();
+        debugger;
+        /*var searchvalue = $("#searchTxt").val();*/
+        if ($("#createcategory").valid()) {
 
-        $.ajax({
-            type: 'post',
-            url: '@Url.Action("Create", "Category")',//'/category/create',
-            data: $('#createcategory').serialize()
-        })
-            .done(function (response) {
-                $("#tablecontainer").html(response);
-                $("#actioncontainer").html("");
-                focusAction("tablecontainer");
 
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("Create", "Category")',//'/category/create',
+                data: $('#createcategory').serialize()
             })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("fail");
+                .done(function (response) {
+                    $("#tablecontainer").html(response);
+                    $("#actioncontainer").html("");
+                    focusAction("tablecontainer");
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal({
+                        title: "Warning",
+                        text: "Please enter all required fields",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    });
+
+                });
+        }
+        else
+        {
+            swal({
+                title: "JS Warning",
+                text: "Please enter all required fields",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
             });
+        }
     });
 
     $("#cancelBtn").click(function () {

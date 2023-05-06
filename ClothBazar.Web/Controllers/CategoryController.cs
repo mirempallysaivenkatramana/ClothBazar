@@ -57,13 +57,20 @@ namespace ClothBazar.Web.Controllers
         [HttpPost]
         public ActionResult Create(NewCategoryViewModel model)
         {
-            var newcategory = new Category();
-            newcategory.Name = model.Name;
-            newcategory.Description = model.Description;
-            newcategory.ImageURL = model.ImageURL;
+            if (ModelState.IsValid)
+            {
+                var newcategory = new Category();
+                newcategory.Name = model.Name;
+                newcategory.Description = model.Description;
+                newcategory.ImageURL = model.ImageURL;
 
-            CategoriesServices.Instance.SaveCategory(newcategory);
-            return RedirectToAction("CategoryTable");
+                CategoriesServices.Instance.SaveCategory(newcategory);
+                return RedirectToAction("CategoryTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
 
         }
         [HttpGet]
