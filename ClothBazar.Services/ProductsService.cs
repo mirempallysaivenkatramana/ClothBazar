@@ -36,6 +36,21 @@ namespace ClothBazar.Services
             int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
             return context.Products.OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize).Include(x=>x.Category).ToList();//to skip
         }
+        public List<Product> GetProducts(int pageNo,int pagesize)
+        {
+            //int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
+            return context.Products.OrderByDescending(x => x.Id).Skip((pageNo - 1) * pagesize).Take(pagesize).Include(x => x.Category).ToList();//to skip
+        }
+        public List<Product> GetProductsByCategory(int CategoryId, int pagesize)
+        {
+            //int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
+            return context.Products.Where(x=>x.Category.Id==CategoryId).OrderByDescending(x => x.Id).Take(pagesize).Include(x => x.Category).ToList();//to skip
+        }
+        public List<Product> GetLatestProducts(int numberofproducts)
+        {
+           // int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
+            return context.Products.OrderByDescending(x => x.Id).Take(numberofproducts).Include(x => x.Category).ToList();//to skip
+        }
         public List<Product> GetProducts(List<int> Ids)
         {
             return context.Products.Where(product => Ids.Contains(product.Id)).ToList();
@@ -46,7 +61,7 @@ namespace ClothBazar.Services
         }
         public void SaveProduct(Product product)
         {
-            context.Entry(product).State = System.Data.Entity.EntityState.Unchanged;
+            context.Entry(product.Category).State = System.Data.Entity.EntityState.Unchanged;
 
             context.Products.Add(product);
             context.SaveChanges();

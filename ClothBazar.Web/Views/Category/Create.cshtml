@@ -6,7 +6,6 @@
 
 <h2>Create category</h2>
 
-
 <form id="createcategory">
     <div class="row">
         <div class="col-md-8">
@@ -143,10 +142,8 @@
     });
     $("#saveBtn").click(function () {
         debugger;
-        /*var searchvalue = $("#searchTxt").val();*/
+        /*var searchvalue = $("#searchTxt").val();*//*dataannodation or fluentapi*/
         if ($("#createcategory").valid()) {
-
-
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("Create", "Category")',//'/category/create',

@@ -5,7 +5,7 @@
     var firstcategory = Model.FeaturedCategories[0];
     var secondcategory = Model.FeaturedCategories[1];
     var thirdcategory = Model.FeaturedCategories[2];
-   // var forthcategory = Model.FeaturedCategories[3];
+     var forthcategory = Model.FeaturedCategories[3];
 }
 
 <div class="banner">
@@ -123,20 +123,74 @@
                 <div class="flat-image-box style-1 data-effect div-h22 clearfix">
                     <div class="item data-effect-item">
                         <div class="inner">
-                            @*@if (forthcategory != null)
-                            {
-                                <div class="thumb">
-                                    <img src="@forthcategory.ImageURL" alt="Image" />
-                                    <div class="ele-btn">
-                                        <a href="#" class="themesflat-button bg-white width-150">@forthcategory.Name</a>
+                            @if (forthcategory != null)
+                                {
+                                    <div class="thumb">
+                                        <img src="@forthcategory.ImageURL" alt="Image" />
+                                        <div class="ele-btn">
+                                            <a href="#" class="themesflat-button bg-white width-150">@forthcategory.Name</a>
+                                        </div>
+                                        <div class="overlay-effect bg-color-1"></div>
                                     </div>
-                                    <div class="overlay-effect bg-color-1"></div>
-                                </div>
-                            }*@
+                                }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-     </div>
+    </div>
 </section>
+<section class="flat-row row-product-new">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section margine-button-52">
+                    <h2 class="title">
+                        New Product
+                    </h2>
+                </div>
+                @{Html.RenderAction("products", "Widgets", new { IsLatestProducts = true });
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<section class="flat-row row-product-new">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section margine-button-52">
+                    <h2 class="title">
+                        Best Sales
+                    </h2>
+                </div>
+                
+                    @{Html.RenderAction("products", "Widgets", new { IsLatestProducts = false });
+                    }
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    //var flatIsotope = function () {
+        //if ($().isotope) {
+        //    var $container = $('.isotope-product');
+        //    $container.imagesloaded(function () {
+        //        $container.isotope({
+        //            itemSelector: '.product-item',
+        //            transitionDuration: '1s',
+        //            layoutMode: 'fitRows'
+        //        });
+        //    })
+        //    $('.flat-filter li').on('click', function () {
+        //        var selector = $(this).find("a").attr('data-filter');
+        //        $('.flat-filter li').removeClass('active');
+        //        $(this).addClass('active');
+        //        $container.isotope({ filter: selector });
+        //        return false;
+        //    })
+        //}
+    //}
+</script>

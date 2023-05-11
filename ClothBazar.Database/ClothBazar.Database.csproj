@@ -68,13 +68,13 @@
     <Compile Include="Migrations\202304211408300_configurationtable.designer.cs">
       <DependentUpon>202304211408300_configurationtable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305041040322_imageURLproducts.cs" />
-    <Compile Include="Migrations\202305041040322_imageURLproducts.designer.cs">
-      <DependentUpon>202305041040322_imageURLproducts.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202305051456501_addedbasicvalidations.cs" />
     <Compile Include="Migrations\202305051456501_addedbasicvalidations.designer.cs">
       <DependentUpon>202305051456501_addedbasicvalidations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305091255412_imageURL.cs" />
+    <Compile Include="Migrations\202305091255412_imageURL.designer.cs">
+      <DependentUpon>202305091255412_imageURL.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,11 +102,11 @@
     <EmbeddedResource Include="Migrations\202304211408300_configurationtable.resx">
       <DependentUpon>202304211408300_configurationtable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305041040322_imageURLproducts.resx">
-      <DependentUpon>202305041040322_imageURLproducts.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305051456501_addedbasicvalidations.resx">
       <DependentUpon>202305051456501_addedbasicvalidations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305091255412_imageURL.resx">
+      <DependentUpon>202305091255412_imageURL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

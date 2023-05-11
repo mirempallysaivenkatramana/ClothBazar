@@ -1,0 +1,101 @@
+﻿@model ClothBazar.Web.ViewModels.ProductViewModels
+@{
+    ViewBag.Title = "Detail";
+}
+@if (Model != null && Model.Product != null)
+{
+    var defaultimageURL = "/Content/images/system/default image.png";
+
+    var imageURL = string.IsNullOrEmpty(Model.Product.ImageURL) ? defaultimageURL : Model.Product.ImageURL;
+
+<h2>Detail</h2>
+<div class="page-title parallax parallax1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-title-heading">
+                    <h1 class="title">
+                        @Model.Product.Name
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="flat-row main-shop-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="wrap-flexslider">
+                    <div class="inner">
+                        <div class="flexslider style-1 has-relative">
+                            <ul class="slides">
+                                <li data-thumb="@imageURL">
+                                    <img src="@imageURL" alt="Image" />
+                                    <div class="flat-icon style-1">
+                                        <a href="@imageURL"class="zoom-popup"><span class="fa fa-search-plus"></span></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="inner">
+            <div class="product title">@Model.Product.Name</div>
+            <div>
+
+            </div>
+            <p>@Model.Product.Description</p>
+            <div class="price">
+                <ins><span class="amount">
+                    $@Model.Product.Price
+                    </span></ins>
+            </div>
+            <div class="product-categories">
+                <span>categories:</span><a href="#">@Model.Product.Category.Name</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="flat-row shop-details-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="flat-tabs style-1 has border">
+                    <div class="inner">
+                        <ul class="menu-tab">
+                            <li class="active">Reviews</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="flat-row shop-related">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section margine-button-52">
+                    <h2 class="title">
+                        Related Products
+                    </h2>
+                </div>
+                @{Html.RenderAction("products", "Widgets", new { IsLatestProducts = false, CategoryId = Model.Product.Category.Id });
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+}
+
