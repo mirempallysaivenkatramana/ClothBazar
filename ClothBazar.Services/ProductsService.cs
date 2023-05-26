@@ -31,11 +31,17 @@ namespace ClothBazar.Services
         }
         #endregion
         CBContext context = new CBContext();
+
+        public int GetMaximumPrice()
+        {
+            return (int)(context.Products.Max(p => p.Price));
+        }
         public List<Product> GetProducts(int pageNo)
         {
             int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
             return context.Products.OrderBy(x=>x.Id).Skip((pageNo-1)*pagesize).Take(pagesize).Include(x=>x.Category).ToList();//to skip
         }
+         
         public List<Product> GetProducts(int pageNo,int pagesize)
         {
             //int pagesize = 5;//int.Parse(ConfigurationsService.Instance.GetConfig("listingpageSize").Value);
@@ -82,5 +88,87 @@ namespace ClothBazar.Services
             context.Products.Remove(product);
             context.SaveChanges();
         }
+
+        public List<Product> SearchProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy,int pageNo,int pageSize)
+        {
+            var products = context.Products.ToList();
+            if (categoryID.HasValue)
+            {
+                products = products.Where(x => x.Category.Id == categoryID.Value).ToList();
+            }
+            if(!string.IsNullOrEmpty(searchTerm))
+            {
+                products = products.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+            }
+            else
+            {
+                products = context.Products.ToList();
+            }
+            if (minimumPrice.HasValue)
+            {
+                products = products.Where(x => x.Price == minimumPrice.Value).ToList();
+            }
+            if (maximumPrice.HasValue)
+            {
+                products = products.Where(x => x.Price == maximumPrice.Value).ToList();
+            }
+            if(sortBy.HasValue)
+            {
+                switch(sortBy.Value)
+                {
+                    case 2:
+                        products = products.OrderByDescending(x => x.Id).ToList();
+                        break;
+                    case 3:
+                        products = products.OrderBy(x => x.Price).ToList();
+                        break;
+                    default:
+                        products = products.OrderByDescending(x => x.Price).ToList();
+                        break;
+                }
+            }
+            return products.Skip((pageNo-1)*pageSize).Take(pageSize).ToList();
+        }
+        public int SearchProductsCount(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy)
+        {
+            var products = context.Products.ToList();
+            if (categoryID.HasValue)
+            {
+                products = products.Where(x => x.Category.Id == categoryID.Value).ToList();
+            }
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                products = products.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
+            }
+            else
+            {
+                products = context.Products.ToList();
+            }
+            if (minimumPrice.HasValue)
+            {
+                products = products.Where(x => x.Price == minimumPrice.Value).ToList();
+            }
+            if (maximumPrice.HasValue)
+            {
+                products = products.Where(x => x.Price == maximumPrice.Value).ToList();
+            }
+            if (sortBy.HasValue)
+            {
+                switch (sortBy.Value)
+                {
+                    case 2:
+                        products = products.OrderByDescending(x => x.Id).ToList();
+                        break;
+                    case 3:
+                        products = products.OrderBy(x => x.Price).ToList();
+                        break;
+                    default:
+                        products = products.OrderByDescending(x => x.Price).ToList();
+                        break;
+                }
+            }
+            return products.Count;
+        }
+
     }
 }

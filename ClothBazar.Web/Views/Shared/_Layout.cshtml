@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ecommerce a Flat E-Commerce Bootstrap Responsive Website Template | Home :: w3layouts</title>
+    <title>@ViewBag.Title-ClothBazar | Home :: w3layouts</title>
     <link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="~/Content/js/jquery.min.js"></script>
@@ -26,7 +26,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- cart -->
     <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <link href="~/favicon.ico" rel="shortcut icon"/>
 </head>
 <body>
     <!-- header-section-starts -->
@@ -44,6 +44,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a href="~/Content/checkout.html">
                             <h3> <span class="simpleCart_total"> $0.00 </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0 </span>)<img src="~/Content/images/bag.png" alt=""></h3>
                         </a>
+                        @if(User.Identity.IsAuthenticated)
+            {
+                <a class="box-login" href="#">@User.Identity.Name</a>
+            }
                         <p><a href="~/Content/javascript:;" class="simpleCart_empty">Empty cart</a></p>
                         <div class="clearfix"> </div>
                     </div>
@@ -52,7 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     </div>
-    <!-- header-section-ends -->
+     header-section-ends 
     <div class="inner-banner">
         <div class="container">
             <div class="banner-top inner-head">
@@ -64,36 +68,76 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <div class="logo">
+                        @*<div class="logo">
                             <h1><a href="~/Content/index.html"><span>E</span> commerce</a></h1>
+                        </div>*@
+                        <div id="logo" class="logo float-left">
+                            <a href="@Url.Action("Index","home")" title="logo">
+                                <img src="~/Content/images/ClothBazar.png" alt="image" width="200" height="44" data-retina="images/ClothBazar.png" data-width="107" data-height="24" />
+                            </a>
                         </div>
                     </div>
-                    <!--/.navbar-header-->
+                    
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.cshtml">Home</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
+                            <li>
+                                <a href="@Url.Action("Index","home")">HOME</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+                            <li>
+                                <a href="@Url.Action("Index","Shop")">SHOP</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
+                            <li>
+                                <a href="@Url.Action("Checkout","Shop")">CHECKOUT</a>
                             </li>
+                            @*<li><a href="index.cshtml">Home</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shop <b class="caret"></b></a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
+        </li>
 
-                            //
-                            <li><a href="~/Content/typography.html">TYPO</a></li>
-                            <li><a href="~/Content/contact.html">CONTACT</a></li>
+
+        <li><a href="~/Content/typography.html">TYPO</a></li>
+        <li><a href="~/Content/contact.html">CONTACT</a></li>*@
                         </ul>
                     </div>
-                    <!--/.navbar-collapse-->
+                    
                 </nav>
-                <!--/.navbar-->
+                
             </div>
         </div>
     </div>
+
+    
+    <header id="header" class="header clearfix">
+        <div class="container-fluid clearfix container-width-93" id="site-header-inner">
+            @*<div id="logo" class="logo float-left">
+                <a href="@Url.Action("Index","home")" title="logo">
+                    <img src="~/Content/images/ClothBazar.png" alt="image" width="107" height="24" data-retina="images/ClothBazar.png" data-width="107" data-height="24" />
+                </a>
+            </div>*@
+        </div>
+        @*<div>
+            <nav id="mainnav" class="mainnav">
+                <ul class="menu">
+                    <li>
+                        <a href="@Url.Action("Index","home")">HOME</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","Shop")">SHOP</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Checkout","Shop")">CHECKOUT</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>*@
+    </header>
     @RenderBody()
     <div class="news-letter">
         <div class="container">
