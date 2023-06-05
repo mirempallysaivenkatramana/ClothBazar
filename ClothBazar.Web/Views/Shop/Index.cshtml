@@ -49,10 +49,10 @@
                             Featured Categories
                         </h5>
                         <div class="tag-list">
-                            @foreach (var category in Model.FeaturedCategories)
+                            @*@foreach (var category in Model.FeaturedCategories)
                             {
                                 <a href="@Url.Action("Index", "Shop", new {categoryID=category.Id})" class="@(Model.CategoryID.HasValue&&Model.Category.Id.value==category.Id?"active":string.Empty)">@category.Name</a>
-                            }
+                            }*@
                         </div>
                     </div>
                     <div class="widget widget-price">

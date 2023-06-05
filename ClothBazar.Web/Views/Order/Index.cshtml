@@ -1,0 +1,126 @@
+﻿@model ClothBazar.Web.ViewModels.OrdersViewModels
+@{
+    ViewBag.Title = "Orders";
+}
+
+<section class="flat-row flat-iconbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2 class="title">
+                        Orders
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <h2 align="centre">Index</h2>
+        <div align="center" id="tablecontainer">
+            <div>
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>search</label>
+                                <input class="form-control" id="searchTxt" name="userID" value="@Model.userID" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>actions</label>
+                                <div class="row">
+                                    <div class="col-md-4 pr-0">
+                                        <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="submit" id="SearchBtn">Search</button>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="reset" id="resetBtn" href="@Url.Action("index", "Order", new { pageno=1})">Reset</button>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <button style="color:white;background-color:yellowgreen;" class="btn-btn-danger form-control" type="button" id="newBtn">New</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <table id="OrdersTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="font-weight-bold">User ID</th>
+                            <th class="font-weight-bold">Total Price</th>
+                            <th class="font-weight-bold">Status</th>
+                            <th class="font-weight-bold wrap-td">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Orders != null && Model.Orders.Count > 0)
+                        {
+                            foreach (var order in Model.Orders)
+                            {
+                                <tr>
+
+                                    <td>@order.UserID</td>
+                                    <td>
+                                        @order.TotalAmount
+
+                                    </td>
+                                    <td>@order.Status</td>
+                                    <td class="wrap-td">
+                                        <a class="DetailBtn" data-id="@order.Id" href="@Url.Action("Details", "Order", new { ID=order.Id})">Details</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">
+                                    no order found
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    @if (Model.pager != null)
+                    {
+                        if (Model.pager.CurrentPage > 1)
+                        {
+                            <a class="pageButtons" data-pageno="1" href="@Url.Action("index", "Order", new { userID=Model.userID,status=Model.Status,pageno=1})">First</a>
+                            <a class="pageButtons" data-pageno="@(Model.pager.CurrentPage-1)" href="@Url.Action("index", "Order", new { userID=Model.userID,status=Model.Status,pageno=Model.pager.CurrentPage-1})">Previous</a>
+                        }
+                        for (var page = Model.pager.StartPage; page <= Model.pager.EndPage; page++)
+                        {
+                            string activeclass = Model.pager.CurrentPage == page ? "active bg-info" : string.Empty;
+                            <a class="@activeclass pageButtons" data-pageno="@page" href="@Url.Action("index", "Order", new { userID=Model.userID,status=Model.Status,pageno=page})">@page</a>
+                        }
+                        if (Model.pager.CurrentPage < Model.pager.TotalPages)
+                        {
+                            <a class="pageButtons" data-pageno="@(Model.pager.CurrentPage+1)" href="@Url.Action("index", "Order", new { userID=Model.userID,status=Model.Status,pageno=Model.pager.CurrentPage+1})">Next</a>
+                            <a class="pageButtons" data-pageno="@(Model.pager.EndPage)" href="@Url.Action("index", "Order", new { userID=Model.userID,status=Model.Status,pageno=Model.pager.EndPage})">Last</a>
+                        }
+                        @*<button class="pageButtons" data-pageNo="@(Model.pageNo - 1)">Previous</button>
+            <button class="pageButtons" data-pageNo="@(Model.pageNo + 1)">Next</button>*@
+                    }
+                </div>
+            </div>
+
+        </div>
+        <div align="center" id="actioncontainer">
+
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().Top
+        }, 1000);
+    }
+</script>

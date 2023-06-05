@@ -173,6 +173,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -180,6 +181,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305171839110_InitialCreate.cs" />
+    <Compile Include="Migrations\202305171839110_InitialCreate.designer.cs">
+      <DependentUpon>202305171839110_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305301830066_addednewpropertiestouser.cs" />
+    <Compile Include="Migrations\202305301830066_addednewpropertiestouser.designer.cs">
+      <DependentUpon>202305301830066_addednewpropertiestouser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -189,6 +199,7 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModels.cs" />
+    <Compile Include="ViewModels\OrdersViewModels.cs" />
     <Compile Include="ViewModels\ProductViewModels.cs" />
     <Compile Include="ViewModels\WidgetViewModel.cs" />
   </ItemGroup>
@@ -327,6 +338,8 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Shop\FilterProducts.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,6 +380,14 @@
       <Project>{0054E33F-E471-43EA-B642-EBDE6D116F05}</Project>
       <Name>ClothBazar.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202305171839110_InitialCreate.resx">
+      <DependentUpon>202305171839110_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305301830066_addednewpropertiestouser.resx">
+      <DependentUpon>202305301830066_addednewpropertiestouser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
