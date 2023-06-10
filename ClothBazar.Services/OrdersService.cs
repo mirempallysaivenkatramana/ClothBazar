@@ -71,6 +71,7 @@ namespace ClothBazar.Services
         {
             var order = context.Orders.Find(ID);
             order.Status = status;
+            context.Entry(order).State = EntityState.Modified;
             return context.SaveChanges()>0;
             
         }

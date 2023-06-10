@@ -9,6 +9,7 @@ using ClothBazar.Web.ViewModels;
 
 namespace ClothBazar.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
        //ProductSearchViewModel model = new ProductSearchViewModel();
